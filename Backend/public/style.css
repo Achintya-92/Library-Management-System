@@ -5,3 +5,286 @@ body {
   padding-top: 80px; /* header height */
 }
 
+/* HEADER */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 80px;
+
+  background-color: rgba(0,0,255,0.5);
+  color: white;
+
+  font-family: sans-serif;
+  font-size: 22px;
+
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 0 6px rgba(225,225,225,0.5);
+  z-index: 1000;
+
+  transition: all 0.3s linear;
+}
+
+header .letter {
+  opacity: 0;
+  animation: fade 1s forwards;
+}
+
+@keyframes fade {
+  to { opacity: 1; }
+}
+
+.space {
+  display: inline-block;
+  width: 10px;  
+}
+
+
+/* Header inner text */
+.head {
+  position: relative;
+  top: 0;
+  color: white;
+}
+
+/* BACKGROUND SECTION */
+.image-home {
+  background-image: url("https://w0.peakpx.com/wallpaper/476/881/HD-wallpaper-books-library-shelves-lighting-beautiful-library-book.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+footer{
+  background-color: rgba(0,0,255,0.5) !important;
+  color: white;
+  font-family: sans-serif;
+  font-size: 22px;
+
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 6px rgba(225,225,225,0.5);
+  z-index: 1000;
+}
+
+/* VIDEO CONTAINER */
+.vdo {
+  border: 2px solid white;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 6px rgba(225, 225, 225, 0.5);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+video {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* REMOVE BOOTSTRAP GAPS */
+.container-fluid, .row, .col-12 {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+    #f_btn {
+      position: relative;
+
+      margin-top: 30px;
+    }
+
+    .sidebar_menu {
+      width: 250px;
+      background: #111;
+      height: 100%;
+      position: sticky;
+      top: 10px;
+      left: 300px;
+      top: 0;
+      transition: all 0.4s ease;
+      padding: 20px;
+       border-radius: 10px;
+    }
+
+    #check:checked ~ .sidebar_menu {
+      left: 0;
+    }
+
+    .sidebar_menu ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar_menu ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar_menu .btn {
+      background: none;
+      border: none;
+      color:white;
+      font-size: 1rem;
+    }
+
+    .sidebar_menu .btn:hover {
+      text-decoration: underline;
+    }
+
+    .social_media {
+      margin-top: 20px;
+    }
+
+    .social_media a {
+      margin: 0 4px;
+      color: white;
+    }
+        .social_mediafoot {
+      margin-top: 20px;
+      margin-left: 500px;
+    }
+
+    .social_mediafoot a {
+      margin: 0 10px;
+      color: white;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      header h3 {
+        font-size: 1.2rem;
+      }
+      footer h4 {
+        font-size: 1rem;
+      }
+      #f_btn h3 {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h3 {
+        font-size: 1rem;
+      }
+      footer h4 {
+        font-size: 0.9rem;
+      }
+      #f_btn h3 {
+        font-size: 0.9rem;
+      }
+    }
+
+.main_box{
+    height:100hv;
+    background-size: cover;
+}
+
+.btn_one{
+  position:fixed;
+  color:white;
+  font-size: 30px;
+  font-weight: 700;
+  position: fixed;      /* fixed so it stays in top-left */
+  left: 16px;
+  top: 20px;
+  cursor: pointer;
+  transition: all 0.2s linear;
+  z-index: 1100;
+}
+
+.sidebar_menu {
+  position: fixed;
+  top: 0;              /* start at top */
+  left: -350px;        /* hidden initially */
+  height: 100vh;
+  width: 300px;
+background-color: rgba(0, 0, 0, 0.5); 
+box-shadow: 0 0 6px rgba(225,225,225,0.5);
+  transition: all 0.3s ease;
+  z-index: 1050;
+}
+
+.sidebar_menu .btn_two i {
+  color: white;
+  font-size: 25px;
+  position: absolute;
+  right: 15px;        /* align to right */
+  top: 15px;
+  opacity: 0;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+#check {
+  display: none;
+}
+
+#check:checked ~ .sidebar_menu {
+  left: 0;   /* slide in */
+}
+
+#check:checked ~ .btn_one i {
+  opacity: 0;  /* hide bars icon */
+}
+
+#check:checked ~ .sidebar_menu .btn_two i {
+  opacity: 1;  /* show close icon */
+}
+
+.sidebar_menu .menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar_menu .menu li {
+  display: flex;             /* align icon + button side by side */
+  align-items: center;       /* vertical alignment */
+  margin: 10px 0;
+  padding: 8px 12px;
+  color: white;
+  transition: background 0.2s;
+}
+
+.sidebar_menu .menu li i {
+  margin-right: 10px;        /* space between icon and button */
+  font-size: 18px;
+}
+
+.sidebar_menu .menu li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.sidebar_menu .menu li button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.sidebar_menu .menu li button:hover {
+  text-decoration:none;
+  translate: 4px;
+  transition: all 0.2s linear;
+}
+
+.social_media a:hover{
+  color: dimgrey;
+  width: 10px;
+
+}
+.social_mediafoot a:hover{
+  color: blueviolet;
+  width: 20px;
+
+}
