@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage-your-Library.com</title>
+<%- include("Includes/link.ejs"); %>
+</head>
+<body class="image">
+  <header class="content">  </header>
+    <div class="main_box">
+      <input type="checkbox" id="check" />
+      <div class="btn_one">
+        <label for="check" style="color: white">
+          <i class="fa-solid fa-bars"></i>
+        </label>
+      </div>
+
+      <div class="sidebar_menu">
+        <div class="logo">
+          <a href="#" id="A">My Library</a>
+        </div>
+        <div class="btn_two">
+          <label for="check" style="color: grey">
+            <i class="fa-solid fa-xmark"></i>
+          </label>
+        </div>
+
+                <div class="menu">
+          <ul>
+            <li>
+          <form action="http://localhost:8000/" method="get">
+            <i class="fa-solid fa-home"></i>
+            <button type="submit">Home</button>
+            </li>
+          </form>
+            <li>
+              <i class="fa-solid fa-book"></i>
+              <form action="http://localhost:8000/library" method="post">
+    <input type="hidden" name="name" value="<%= name %>">
+    <input type="hidden" name="email" value="<%= email %>">
+<button type="submit">Your Library</button>
+  </form>
+            </li>
+            <li>
+                            <i class="fa-solid fa-plus"></i>
+                            <form action="http://localhost:8000/entry_add" method="post"><button type="submit">Add Books</button></form>
+            </li>
+            <li>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            <form action="http://localhost:8000/search_entry" method="post">
+    <input type="hidden" name="name" value="<%= name %>">
+    <input type="hidden" name="email" value="<%= email %>">
+    <button type="submit">Search Book</button>
+  </form>
+            </li>
+            <li>
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <form action="http://localhost:8000/help" method="get"><button type="submit">Help</button></form>
+            </li>
+            </li>
+<li>
+<i class="fa-solid fa-user-circle"></i>
+  <form action="http://localhost:8000/account" method="post">
+    <input type="hidden" name="name" value="<%= name %>">
+    <input type="hidden" name="email" value="<%= email %>">
+    <button type="submit" >Your Account</button>
+  </form>
+</li>
+            </li>
+            </li>
+            <li>
+              <i class="fa-solid fa-phone"></i>
+              <form action="http://localhost:8000/contact" method="get"><button type="submit" >Contact Us</button></form>
+            </li>
+            </li>
+            <li>
+              <i class="fa-regular fa-comments"></i>
+              <form action="http://localhost:8000/feedback" method="get"><button type="submit" >Feedback</button></form>
+            </li>
+            </li>
+          </ul>
+        </div>
+  </div>
+</div>
+  <script>
+let nm = "<%= name %>";
+
+const text = `Welcome Dear ${nm}`;   // ✅ Use backticks
+
+const container = document.querySelector('header');
+
+text.split('').forEach((char, index) => {
+    const span = document.createElement('span');
+
+    if (char === ' ') {
+        span.className = 'space';
+    } else {
+        span.textContent = char;
+        span.className = 'letter';
+        span.style.animationDelay = `${index * 0.1}s`;   // ✅ Correct template literal
+    }
+
+    container.appendChild(span);
+});
+
+
+const checkbox = document.getElementById("check");
+const header = document.querySelector("header");
+
+checkbox.addEventListener("change", () => {
+  if (checkbox.checked) {
+    header.style.paddingLeft = "250px";
+      header.style.borderColor = "transparent";
+  } else {
+    header.style.paddingLeft = "20px";
+     header.style.borderColor = "blue";
+  }
+});
+
+</script>
+</html>

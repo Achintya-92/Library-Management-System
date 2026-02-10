@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Details</title>
+<%- include("Includes/link.ejs"); %>
+</head>
+<body class="bg-light">
+
+  <div class="container mt-5">
+    <h2 class="mb-4 text-center">📚 Book Details</h2>
+
+    <% if (result.length > 0) { %>
+      <div class="row justify-content-center">
+        <% result.forEach(book => { %>
+          <div class="col-md-6">
+            <div class="card mb-3 shadow">
+              <div class="card-body">
+                <h5 class="card-title"><%= book.book_name %></h5>
+                <p class="card-text"><strong>Author:</strong> <%= book.author_name %></p>
+                <p class="card-text"><strong>Edition:</strong> <%= book.edition %></p>
+                <p class="card-text"><strong>Price:</strong> ₹<%= book.price %></p>
+                <p class="card-text"><strong>Row No:</strong> <%= book.row_no %></p>
+                <p class="card-text"><strong>Col No:</strong> <%= book.col_no %></p>
+                <p class="card-text"><strong>Available Count:</strong> <%= book.count %></p>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="alert alert-danger text-center">❌ Book not found!</div>
+    <% } %>
+
+    <div class="text-center mt-3">
+      <a href="/" class="btn btn-primary">🔙 Back to Search</a>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Manage-your-Library.com</title>
+      <%- include("Includes/link.ejs"); %>
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .grid-container {
+      width: 70%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .feature-btn {
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid black;
+      background-color:rgba(3, 3, 255, 0.2);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      color: whitesmoke;
+      font-size: 18px;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .feature-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    }
+
+    h1{
+      color: white;
+      text-align: center;
+      position: absolute;
+      top: 30px;
+      width: 100%;
+    }    
+    
+  h4 {
+      color:lightskyblue;
+      text-align: center;
+      position: absolute;
+      top: 85px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body class="image-home">
+
+<h1 class="text-light"><img src="library.ico" alt="lib" width="50px" height="50px" style="top: 30px;">&nbsp;Your Library</h1>
+<br>
+<br>
+  <h4 >Let's Starts</h4>
+<div class="grid-container">
+
+    <form action="http://localhost:8000/" method="get">
+    <button class="feature-btn text-light"><i class="fa-solid fa-house fs-1 mb-2"></i><br>Home</button>
+  </form>
+
+  <form action="http://localhost:8000/entry_add" method="post">
+    <button class="feature-btn"><i class="fa-solid fa-plus fs-1 mb-2"></i><br>Add Book</button>
+  </form>
+
+  <form action="http://localhost:8000/books" method="get">
+    <button class="feature-btn"><i class="fa-solid fa-book fs-1 mb-2"></i><br>Books</button>
+  </form>
+
+  <form action="http://localhost:8000/search_entry" method="get">
+    <button class="feature-btn"><i class="fa-solid fa-magnifying-glass fs-1 mb-2"></i><br>Search</button>
+  </form>
+
+  <form action="/help" method="get">
+    <button class="feature-btn"><i class="fa-solid fa-circle-info fs-1 mb-2"></i><br>Help</button>
+  </form>
+
+  <form action="http://localhost:8000/contact" method="get">
+    <button class="feature-btn"><i class="fa-solid fa-phone fs-1 mb-2"></i><br>Contact</button>
+  </form>
+
+  <form action="http://localhost:8000/Feedback" method="get">
+    <button class="feature-btn"><i class="fa-solid fa-message fs-1 mb-2"></i><br>Feedback</button>
+  </form>
+</div>
+<script>
+        if(message){
+         alert(message);
+        }
+</script>
+</body>
+</html>

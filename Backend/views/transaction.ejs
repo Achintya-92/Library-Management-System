@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Borrow Transactions</title>
+
+  <!-- Bootstrap CSS (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Optional: Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* Small custom styling to make it look modern */
+    body { background: #f7fafc; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    .card { border: 0; box-shadow: 0 6px 18px rgba(15,23,42,0.06); }
+    .table thead th { border-bottom: 0; }
+    .badge-status-borrowed { background: #0ea5a2; } /* teal */
+    .badge-status-returned { background: #64748b; } /* slate */
+    .small-muted { font-size: 0.85rem; color: #6b7280; }
+    .truncate { max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    @media (max-width: 575.98px) {
+      .desktop-only { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Borrow Transactions</h3>
+    <div>
+      <input id="globalSearch" class="form-control form-control-sm" placeholder="Search (book / user / status)" style="min-width:220px;">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="bg-white">
+            <tr>
+              <th>Transaction Id</th>
+              <th class="desktop-only">Borrower Id</th>
+              <th class="text-end">Amount</th>
+              <th>Borrow Date</th>
+              <th class="desktop-only">Return Date</th>
+              <th>Status</th>
+              <th>Action</th>
+              <th>View Borrower</th>
+            </tr>
+          </thead>
+          <tbody id="transactions123">
+            <% if (transactions && transactions.length) { %>
+              <% transactions.forEach(function(tx, idx) { %>
+                <tr>
+                  <td><%= tx.transaction_id %></td>
+                
+                    <td><%= tx.b_id %></td>
+
+                     <td><%= tx.amount %></td>
+                     
+                  <td><%= tx.borrow_date ? tx.borrow_date.toISOString().split('T')[0] : '-' %></td>
+
+                  <td class="desktop-only"><%= tx.return_date ? tx.return_date.toISOString().split('T')[0] : '-' %></td>
+
+                  <td>
+                    <% if (tx.status === 'borrowed') { %>
+                      <span class="badge badge-status-borrowed text-white px-2 py-1"><i class="fa-solid fa-box-open me-1"></i> Borrowed</span>
+                    <% } else { %>
+                      <span class="badge badge-status-returned text-white px-2 py-1"><i class="fa-solid fa-rotate-right me-1"></i> Returned</span>
+                    <% } %>
+                  </td>
+
+                  <td class="text-end">
+                    <div class="btn-group" role="group" aria-label="actions">
+                      <button class="btn btn-sm btn-outline-primary view-borrowers-btn" data-book-id="<%= tx.book_id %>" title="View borrowers">
+                        <i class="fa-solid fa-users"></i>
+                      </button>
+                      <% if (tx.status === 'borrowed') { %>
+                        <form method="POST" action="/transactions/return" class="d-inline ms-1">
+                          <input type="hidden" name="transaction_id" id="transaction_id" value="<%= tx.transaction_id %>">
+                          <input type="hidden" name="book_id" id="book_id" value="<%= tx.book_id %>" >
+                          <button class="btn btn-sm btn-success" type="submit" title="Mark Returned"><i class="fa-solid fa-check"></i></button>
+                        </form>
+                      <% } %>
+                      </div>
+                      <td>
+                      <form action="/borrower" method="post">
+                        <input type="hidden" name="b_id" id="b_id" value="<%= tx.b_id %>">
+                        <button type="submit" class="btn btn-outline-primary">view</button>
+                      </form>
+                      </td>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr><td colspan="7" class="text-center p-4 small-muted">No transactions found.</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- footer: simple paging placeholders -->
+    <div class="card-footer d-flex justify-content-between align-items-center small-muted">
+      <div>Showing <%= transactions ? transactions.length : 0 %> transactions</div>
+      <div>Powered by yourLibrary</div>
+    </div>
+  </div>
+</div>
+
+<!-- Borrowers Modal -->
+<div class="modal fade" id="borrowersModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Borrowers for <span id="modalBookTitle"></span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="borrowersContent">
+          <div class="text-center small-muted py-3">Loading...</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS (with Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Optional: fetch polyfill for older browsers -->
+<script>
+  // Simple client-side search (filter)
+  document.getElementById('globalSearch').addEventListener('input', function(e) {
+    const q = e.target.value.toLowerCase().trim();
+    const rows = document.querySelectorAll('#txTableBody tr');
+    rows.forEach(row => {
+      const book = (row.dataset.bookTitle || '').toLowerCase();
+      const user = (row.dataset.userName || '').toLowerCase();
+      const status = (row.dataset.status || '').toLowerCase();
+      row.style.display = (book.includes(q) || user.includes(q) || status.includes(q)) ? '' : 'none';
+    });
+  });
+
+  // View Borrowers button click (AJAX)
+  document.querySelectorAll('.view-borrowers-btn').forEach(btn => {
+    btn.addEventListener('click', async function() {
+      const bookId = this.dataset.bookId;
+      const modal = new bootstrap.Modal(document.getElementById('borrowersModal'));
+      document.getElementById('modalBookTitle').textContent = '...';
+      document.getElementById('borrowersContent').innerHTML = '<div class="text-center small-muted py-3">Loading...</div>';
+      modal.show();
+
+      try {
+        const res = await fetch(`/borrowers/${bookId}`);
+        if (!res.ok) throw new Error('Network response was not ok');
+        const data = await res.json();
+
+        document.getElementById('modalBookTitle').textContent = data.bookTitle || 'Book';
+        if (!data.borrowers || !data.borrowers.length) {
+          document.getElementById('borrowersContent').innerHTML = '<div class="text-center small-muted py-3">No borrowers found for this book.</div>';
+          return;
+        }
+
+        const listHtml = data.borrowers.map(b => {
+          return `
+            <div class="d-flex justify-content-between align-items-start border-bottom py-2">
+              <div>
+                <div class="fw-semibold">${b.name}</div>
+                <div class="small-muted">User ID: ${b.user_id} • Phone: ${b.phone || '—'}</div>
+              </div>
+              <div class="text-end small-muted">
+                <div>${b.borrow_date ? b.borrow_date.split('T')[0] : '-'}</div>
+                <div>${b.return_date ? b.return_date.split('T')[0] : '<span class="text-danger">Not returned</span>'}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        document.getElementById('borrowersContent').innerHTML = listHtml;
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('borrowersContent').innerHTML = '<div class="text-danger text-center py-3">Failed to load borrowers.</div>';
+      }
+    });
+  });
+</script>
+</body>
+</html>

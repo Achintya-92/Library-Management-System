@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="icon" type="image/x-icon" href="/library.ico">
+       <%- include("Includes/link.ejs"); %>
+</head>
+<body style="padding: 5% 20% 20% 20%;">
+    <header>Feedback</header>
+   <br>
+   <br>
+      <div class="card box-shadow border-100 text-center">Your One Feedback Help us A lot So please</div>
+      <br>
+      <br>
+    <h4 class="card-text bg-light" align="center">Write Your Feedback</h4>
+    <br>
+    <form action="/save" method="post">
+    <textarea name="feedback" id="feedback" style="align-items: center; border:2px solid slateblue;" cols="30" rows="10" class="form-control"></textarea>
+    <br>
+    <button type="submit" class="btn btn-outline-primary  form-control">Submit</button>
+</form>
+</body>
+</html>

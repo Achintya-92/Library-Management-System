@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Books</title>
+<%- include("Includes/link.ejs"); %>
+</head>
+<body class="container mt-5">
+
+<h2 class="mb-4" style="color: white;">📚 Your Books</h2>
+
+<!-- Add / Search Actions -->
+<div class="d-flex justify-content-between mb-3">
+  <!-- Add Book Button -->
+   <form action="/entry_add" method="post">
+  <button class="btn btn-primary">➕ Add New Book</button>
+</form>
+  <!-- Search Form -->
+  <form class="d-flex" action="/search" method="get">
+    <input class="form-control me-2" type="search" name="book" placeholder="Search books..." aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+</div>
+
+<!-- Books Table -->
+<table class="table table-bordered table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Id</th>
+      <th>Book Name📖</th>
+      <th>Author</th>
+      <th>Edition</th>
+      <th>Price</th>
+      <th>Row no.,
+        Col no.</th>
+      <th>Count</th>
+      <th>Action</th>
+      <th>Borrowed by</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (books.length > 0) { %>
+      <% books.forEach((book) => { %>
+        <tr>
+          <td><%= book.book_id %></td>
+          <td><%= book.book_name %></td>
+          <td><%= book.author_name %></td>
+          <td><%= book.edition %></td>
+          <td>₹<%= book.price %></td>
+          <td><%= book.row_no %>,
+          <%= book.col_no %></td>
+          <td><%= book.count %></td>
+          <td>
+            <!-- Buy Button -->
+            <form action="/books/<%= book.book_id %>/buy" method="POST" class="d-inline">
+                  <input type="hidden" name="bookid" value="<%= book.book_id %>">
+              <button class="btn btn-sm btn-success" <% if(book.count <= 0){ %> disabled <% } %> >
+                Borrow
+              </button>
+            </form>
+
+            <!-- Optional: Edit Button -->
+            <form action="/editBook"  method="post">
+              <input type="hidden" name="book_id" id="book_id" value="<%= book.book_id %>">
+              <button class="btn btn-sm btn-warning">Edit</button>
+            </form>
+
+            <!-- Optional: Delete Button -->
+            <form action="/delete"  method="post">
+              <input type="hidden" name="bookid" id="bookid" value="<%= book.book_id %>">
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </td>
+          <td>
+            <% if (book.book_id > 0) { %>
+          <form action="/transactions" method="post">
+          <input type="hidden" name="book_id" id="book_id" value="<%= book.book_id %>">
+         <button type="submit" id="transaction" class="btn btn-sm btn-primary"><%= book.t_count %> Borrows</button>
+         </form>
+          <% } else { %>
+              Not Borrowed Yet
+              <% } %>
+        </td>
+        </tr>
+      <% }); %>
+    <% } else { %>
+      <tr>
+        <td colspan="7" class="text-center text-muted">No books in your library</td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+</body>
+</html>

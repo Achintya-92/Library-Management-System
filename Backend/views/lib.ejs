@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Manage-your-Library.com</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <%- include("Includes/link.ejs"); %>
+
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: Arial, sans-serif;
+    }
+    .vdo {
+      border: 2px solid #ddd;
+      background-color: rgba(0,0,0,0.05);
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    video {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .feature-card {
+      transition: 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="image-home"></div>
+        <button onclick="location.href='http://localhost:8000/' "> <i class="fa-solid fa-calendar-days">Back to Home</i></button>
+ 
+   <div class="text-center mb-5">
+    <h1 style="color: white;">Your Library</h1>
+    <p class="lead">Lets Work</p>
+  </div>  <!-- Features Section -->  
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-4">
+      <div class="card feature-card h-100 p-3">
+        <div class="card-body text-center">
+          <i class="fa-solid fa-magnifying-glass fs-1 mb-3 text-success"></i>
+                            <form action="http://localhost:8000/entry_add" method="post"><button type="submit" class="btn">Add Books</button></form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card feature-card h-100 p-3">
+        <div class="card-body text-center">
+          <i class="fa-solid fa-book fs-1 mb-3 text-primary"></i>
+       <form action="http://localhost:8000/books" method="get"><button>Books</button></form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card feature-card h-100 p-3">
+        <div class="card-body text-center">
+          <i class="fa-solid fa-magnifying-glass fs-1 mb-3 text-success"></i>
+            <form action="http://localhost:8000/search_entry" method="get">
+    <button type="submit" class="btn">Search Book</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card feature-card h-100 p-3">
+        <div class="card-body text-center">
+          <i class="fa-solid fa-user-lock fs-1 mb-3 text-warning"></i>
+              <form action="http://localhost:8000/help" method="get"><button type="submit" class="btn">Help</button></form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card feature-card h-100 p-3">
+        <div class="card-body text-center">
+          <i class="fa-solid fa-calendar-check fs-1 mb-3 text-danger"></i>
+              <form action="http://localhost:8000/contact" method="post"><button type="submit" class="btn">Contact Us</button></form>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card feature-card h-100 p-3">
+        <div class="card-body text-center">
+          <i class="fa-solid fa-credit-card fs-1 mb-3 text-info"></i>
+         <form action="http://localhost:8000/" method="get"><button>Home</button></form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card feature-card h-100 p-3">
+        <div class="card-body text-center">
+          <i class="fa-solid fa-database fs-1 mb-3 text-secondary"></i>
+              <form action="http://localhost:8000/Feedback" method="post"><button type="submit" class="btn">Feedback</button></form>
+        </div>
+      </div>
+    </div>
+  </div></div><!-- Footer --><footer class="text-center mt-5 py-4 bg-dark text-light">
+  <h4><%= count %> People are part of our Community</h4>
+  <form action="/entry" method="get">
+    <button class="btn btn-outline-light mt-2" id="f_btn">
+      <h3>Start Manage</h3>
+    </button>
+  </form>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+
+/* Fix body overlap with fixed header */
+body {
+  margin: 0;
+  padding-top: 80px; /* header height */
+}
+

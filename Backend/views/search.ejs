@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Search</title>
+<%- include("Includes/link.ejs"); %>
+<style>
+  .search-box {
+  width: 100%;
+  max-width: 500px;
+  margin: 10px auto;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 6px 12px;
+  gap: 10px;
+  background: #fff;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.search-icon {
+  font-size: 20px;
+  color: #666;
+}
+
+.clear-btn {
+  cursor: pointer;
+  font-size: 20px;
+  color: #888;
+}
+
+.clear-btn:hover {
+  color: #000;
+}
+
+.btn-search {
+  background: #4285F4;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.btn-search:hover {
+  background: #3367d6;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: inline-block !important;
+}
+
+
+.hidden {
+  opacity: 0;
+  pointer-events: none; 
+  transition: opacity 0.2s ease;
+}
+
+.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.2s ease;
+}
+
+
+</style>
+</head>
+<body >
+  <header><h2>Search Book</h2></header>
+  <br>
+  <br>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<form id="search-form" action="/search" method="get">
+  
+  <h5 align="center">Search by Book name</h5>
+
+  <div class="search-box">
+      <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+
+      <input type="text" class="book-input" name="book"
+             placeholder="Search book..." autocomplete="off">
+
+      <span class="clear-btn"><i class="fa-solid fa-xmark"></i></span>
+
+      <button type="submit" class="btn-search">Search</button>
+  </div>
+
+  <h6 align="center">Or by Author name</h6>
+
+  <div class="search-box">
+      <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+
+      <input type="text" class="book-input" name="author"
+             placeholder="Enter book author name..." autocomplete="off">
+
+      <span class="clear-btn" ><i class="fa-solid fa-xmark"></i></span>
+
+      <button type="submit" class="btn-search">Search</button>
+  </div>
+
+</form>
+
+
+<script>
+  const searchBoxes = document.querySelectorAll(".search-box");
+
+  searchBoxes.forEach(box => {
+    const input = box.querySelector(".book-input");
+    const searchIcon = box.querySelector(".search-icon");
+    const clearBtn = box.querySelector(".clear-btn");
+
+    // Toggle icons
+    input.addEventListener("input", () => {
+      if (input.value.length > 0) {
+        searchIcon.classList.add("hidden");
+        clearBtn.classList.add("visible");
+      } else {
+        searchIcon.classList.remove("hidden");
+        clearBtn.classList.remove("visible");
+      }
+    });
+
+    // Clear input on X click
+    clearBtn.addEventListener("click", () => {
+      input.value = "";
+      input.focus();
+      clearBtn.classList.remove("visible");
+      searchIcon.classList.remove("hidden");
+    });
+  });
+</script>
+
+  </script>
+</body>
+</html>

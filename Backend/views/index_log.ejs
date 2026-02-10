@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage-your-Library.com</title>
+<%- include("Includes/link.ejs"); %>
+</head>
+<body class="image-home">
+    <header> </header>
+    <div class="main_box">
+      <input type="checkbox" id="check" />
+      <div class="btn_one">
+        <label for="check" style="color: white">
+          <i class="fa-solid fa-bars"></i>
+        </label>
+      </div>
+
+      <div class="sidebar_menu">
+        <div class="logo">
+          <a href="#" id="A">My Library</a>
+        </div>
+        <div class="btn_two">
+          <label for="check" style="color: grey">
+            <i class="fa-solid fa-xmark"></i>
+          </label>
+        </div>
+        <div class="menu">
+          <ul>
+         <li>
+            <i class="fa-solid fa-house"></i>
+           <form action="http://localhost:8000/" method="get" ><button>Home</button></form></li>
+            <li>
+              <i class="fa-solid fa-calendar-days"></i>
+              <form action="http://localhost:8000/library" method="post">
+    <input type="hidden" name="name" value="<%= user.name %>">
+    <input type="hidden" name="email" value="<%= user.email %>">
+<button type="submit">Your Library</button>
+  </form>
+            </li>
+            <li>
+              <i class="fa-solid fa-plus"></i>
+                            <form action="http://localhost:8000/entry_add" method="post"><button type="submit">Add Books</button></form>
+            </li>
+            <li>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            <form action="http://localhost:8000/search_entry" method="GET">
+    <button type="submit">Search Book</button>
+  </form>
+            </li>
+            <li>
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <form action="/help" method="get"><button type="submit">Help</button></form>
+            </li>
+            </li>
+<li>
+  <i class="fa-solid fa-user"></i>
+  <form action="http://localhost:8000/account" method="post">
+    <input type="hidden" name="name" value="<%= user.name %>">
+    <input type="hidden" name="email" value="<%= user.email %>">
+    <button type="submit">Your Account</button>
+  </form>
+</li>
+            <li>
+              <i class="fa-regular fa-comments"></i>
+              <form action="/feedback" method="get"><button type="submit">Feedback</button></form>
+            </li>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div> 
+</div>
+</body>
+<script>
+     let nm = "<%= user.name %>";
+    const text = `Welcome Dear  ${nm}`;
+
+    const container = document.querySelector('header');
+
+    text.split('').forEach((char, index) => {
+      const span = document.createElement('span');
+      if(char === ' '){
+        span.className='space';
+      }
+      else{
+      span.textContent = char;
+      span.className = 'letter';
+      span.style.animationDelay = `${index * 0.09}s`;
+    }
+
+      container.appendChild(span);
+    });
+
+
+
+</script>
+</html>
